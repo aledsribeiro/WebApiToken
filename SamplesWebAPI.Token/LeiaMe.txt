@@ -1,0 +1,35 @@
+﻿Autenticação via token
+
+OWIN já possui alguns middlewares e entre eles está o OAuth2 que serve para executar o processo de autenticação.
+
+
+O protocolo OAuth2 efetua a validação e gera o token para devolução ao cliente, para isso basta efetuar um post para o endereço configurado em uma propriedade chamada TokenEndpointPath , passando no body da mensagem três parâmetros: grant_type, username e password.
+
+Com esse token em mãos você do lado do cliente deve guardar e usar nas requisições futuras até que perca a validade e você tenha que requisitar um novo.
+
+Na classe Startup foi implementado um método que
+configura o token.
+
+Depois de tudo configurado, fiz uma chamada no
+postman passando a url:
+
+http://localhost:49719/token
+
+no body deixar selecionado o radio button x-wwww-form-urlencoded
+incluir os campos
+username	 nomeusuario
+password	senha do usuario
+grant_type	password
+
+fazendo a chamada post, é obtido como retorno o
+token de autenticação com o type e o tempo de
+expiração
+
+para chamar serviço protegido, agora tem que
+adicionar o token na chamada
+
+http://localhost:49719/api/Values
+
+no headers adicionar o campo Authorization
+value bearer KmEfFEr3fmQvxMESWN-yklIaZhMvqLG53QzGKKgLJ8a6ur-T02lgaXCJv7BiIWWf5x6e5-e9IoLrrYuxJGJvOH-nG3ZWcLuhvkhcLZPNHATbnd-0Ew0JQkEyVe32IbCAnCd2my9euwy4EAZT3d6M71BmRRHbI7wfvp5dunCgKI6Rv_3zoiH2ygiFc6tT2xyXWqwsCrICAOALFa7r_eOk9Q
+
